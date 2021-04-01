@@ -22,6 +22,9 @@ avg = np.mean(data['walkscore'][data['walkscore'] != '-']) # replace the '-' val
 data['walkscore'] = data['walkscore'].apply(lambda x: avg if x == '-' else x)
 
 # Clean up the 'sq_ft' feature. In the case of sq_ft being a range instead of a number, take the average of the min and max.
+data['sq_ft_range'] = 0
+data['sq_ft_range'][data_3['sq_ft'].str.contains(' – ')] = 1 # Create a column to indicate that this is a range.
+
 data['sq_ft'] = data['sq_ft'].replace(' sq ft',"", regex = True)
 data['min_sq_ft'] = data['sq_ft']
 data['max_sq_ft'] = data['sq_ft']
@@ -33,6 +36,9 @@ data['sq_ft_updated'] = data.loc[: , "min_sq_ft":"max_sq_ft"].mean(axis=1)
 data = data[(1 < data.sq_ft_updated) & (data.sq_ft_updated < 9000)] # drop the extreme values
 
 # Clean up the 'rent' feature. In the case of rent being a range instead of a number, take the average of the min and max.
+data['rent_range'] = 0
+data['rent_range'][data['rent'].str.contains(' – ')] = 1 # Create a column to indicate that this is a range.
+
 data = data.drop(index = data[data['rent'].str.contains('Person')].index)
 data = data.drop(index = data[data['rent'].str.contains('Call for Rent')].index)
 data['min_rent'] = data['rent']
@@ -101,6 +107,14 @@ clean_data = data[['url', 'property_name', 'city', 'rent_updated', 'n_bath','n_b
         'pool', 'fitness_center', 'elevator', 'kitchen_features','security_system', 
         'washer_dryer', 'internet', 'air_conditioning', 'furnished']]
 clean_data.to_csv('clean_apt_data.csv')
+
+# Reorder and export the cleaned data with exact rent and sqrt (i.e. not a range)
+clean_data_exact = data[['url', 'property_name', 'city', 'rent_updated', 'n_bed','n_bath',
+       'sq_ft_updated', 'walkscore', 'allow_pet', 'minimum_lease', 'onsite_parking', 
+        'pool', 'fitness_center', 'elevator', 'kitchen_features',
+       'security_system', 'washer_dryer', 'internet', 'air_conditioning',
+       'furnished', 'rent_range', 'sq_ft_range']][(data['rent_range'] == 0) & (data['sq_ft_range'] == 0)]
+clean_data_exact.to_csv('clean_apt_data_norange.csv')
 
 
 
