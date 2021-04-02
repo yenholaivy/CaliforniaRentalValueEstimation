@@ -4,12 +4,12 @@
 According to 2019 Census American Community Survey (ACS) data, 45% of households in California were renters. As a renter myself, I am curious to know how the rental prices differ based on different apartments features (e.g. location, size). My goal is to build a model to predict rental values in California.
 
 #### Data Collection
-My data was scraped and parsed from apartments.com using BeautifulSoup, organized into a Pandas dataframe, and saved locally as a csv file. (For details, see )
+My data was scraped and parsed from apartments.com using BeautifulSoup, organized into a Pandas dataframe, and saved locally as a csv file. For details, see [apt_scraper.py](https://github.com/yenholaivy/CaliforniaRentalValueEstimation/blob/main/apt_scraper.py)
 
 #### Data Cleaning
 The final dataframe contains apartment listings from over 150 cities, 4,000 properties and 15,000 apartment listings. 
 
-For data cleaning, I extracted and converted most features to binary features (e.g. Washer/Dryer) with 1 = Yes and 0 = No. I also converted numeric features specificed as a range to its average value (e.g. Rental Price). (For details, see)
+For data cleaning, I extracted and converted most features to binary features (e.g. Washer/Dryer) with 1 = Yes and 0 = No. I also converted numeric features specificed as a range to its average value (e.g. Rental Price). For details, see [apt_data_cleaning.py](https://github.com/yenholaivy/CaliforniaRentalValueEstimation/blob/main/apt_data_cleaning.py)
 
 #### Features
 
@@ -40,13 +40,16 @@ As briefly mentioned in the Data Cleaning section, some of the numeric features 
 #### Rental Price Distribution
 Looking at the rental price distributions, we can see that the shapes are quite similar between the whole dataset and the dataset with only single values. They are both right skewed, with the mean price around $3,100.
 
-![alt text](https://github.com/yenholaivy/SFPD-Incident-Reports-Analysis/blob/main/img/larceny-amount-bar.png)
+![alt text](https://github.com/yenholaivy/CaliforniaRentalValueEstimation/blob/main/img/rental_price_dist.png)
 
 #### Cities
 Even though there are more than 150 cities in the dataset, about 40% came from 5 cities. Below you can see that the top three cities are the same between the whole dataset and the dataset with only single values. Los Angeles, San Diego and San Francisco. So, instead of using all 150 cities, I converted these three cities to dummy variables and incorporate them in my prediction model.
 
+![alt text](https://github.com/yenholaivy/CaliforniaRentalValueEstimation/blob/main/img/top5cities_all.png)
+![alt text](https://github.com/yenholaivy/CaliforniaRentalValueEstimation/blob/main/img/top5cities_sv.png)
+
 ## Modeling
-For my prediction model, I've tried linear regression, ridge regression, decision tree, random forest and gradient boosting. My baseline is to predict the mean price, and I evaluated each created model using the Root Mean Square Error (RMSE).
+For my prediction model, I've tried linear regression, ridge regression, decision tree, random forest and gradient boosting. My baseline is to predict the mean price, and I evaluated each created model using the Root Mean Square Error (RMSE). For details, see [California_Rental_Price_Estimator.ipynb](https://github.com/yenholaivy/CaliforniaRentalValueEstimation/blob/main/California_Rental_Price_Estimator.ipynb)
 
 #### Result
 The results showed that random forest gave us the best prediction. For the training data, we were able to decrease the error from almost 1900 to 1100, which is about 42%. As for the data with only single value, results showed that the scores are much higher. One possible explanation for this is that the sample size is much smaller and so there might be more variance in the data. 
