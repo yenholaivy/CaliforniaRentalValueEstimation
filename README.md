@@ -40,6 +40,8 @@ As briefly mentioned in the Data Cleaning section, some of the numeric features 
 #### Rental Price Distribution
 Looking at the rental price distributions, we can see that the shapes are quite similar between the whole dataset and the dataset with only single values. They are both right skewed, with the mean price around $3,100.
 
+![alt text](https://github.com/yenholaivy/SFPD-Incident-Reports-Analysis/blob/main/img/larceny-amount-bar.png)
+
 #### Cities
 Even though there are more than 150 cities in the dataset, about 40% came from 5 cities. Below you can see that the top three cities are the same between the whole dataset and the dataset with only single values. Los Angeles, San Diego and San Francisco. So, instead of using all 150 cities, I converted these three cities to dummy variables and incorporate them in my prediction model.
 
